@@ -1,0 +1,59 @@
+name: Build Pyarrow wheel for ARM
+
+on:
+  push:
+    branches:
+      - main
+      - ci/*
+    tags:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # We need docker experimental to pull the ARM image.
+    - name: Switch docker to experimental
+      run: |
+          docker version -f '{{.Server.Experimental}}'
+          echo $'{\n    "experimental": true\n}' | sudo tee /etc/docker/daemon.json
+          sudo systemctl restart docker
+          docker version -f '{{.Server.Experimental}}'
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v3.3.1
+      with:
+        buildx-version: latest
+        qemu-version: latest
+
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+
+    - name: Build Pyarrow wheels
+      run: |
+        docker buildx build -f Dockerfile \
+          --platform linux/arm/v7 \
+          --load \
+          -t pyarrow:wheel .
+
+    - name: Extract Wheels from image
+      run: |
+        docker run --rm -v $(pwd)/assets:/assets \
+          --platform linux/arm/v7 \
+          pyarrow:wheel \
+          cp -r /build/arrow/python/dist /assets/
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: pyarrow_wheels
+        path: ./assets

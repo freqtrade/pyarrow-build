@@ -4,7 +4,7 @@ FROM python:3.9.15-slim-bullseye as base
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 # start pyarrow build
-ARG ARROW_VERSION=10.0.0
+ARG ARROW_VERSION=11.0.0
 
 RUN apt-get update \
     && apt-get -y install \
@@ -73,6 +73,9 @@ ENV PYARROW_CMAKE_OPTIONS="-DARROW_USE_LD_GOLD=ON"
 ENV PYARROW_WITH_PLASMA=1
 ENV PYARROW_WITH_PARQUET=1
 ENV PYARROW_BUNDLE_ARROW_CPP=1
+ENV Arrow_DIR=$ARROW_HOME
+ENV Parquet_DIR=$ARROW_HOME
+ENV Plasma_DIR=$ARROW_HOME
 
 
 WORKDIR /build/arrow/python

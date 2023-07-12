@@ -4,7 +4,7 @@ FROM python:3.9.15-slim-bullseye as base
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 # start pyarrow build
-ARG ARROW_VERSION=11.0.0
+ARG ARROW_VERSION=12.0.1
 
 RUN apt-get update \
     && apt-get -y install \

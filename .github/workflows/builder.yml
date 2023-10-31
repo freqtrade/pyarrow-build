@@ -45,7 +45,7 @@ jobs:
       run: |
         docker buildx build -f Dockerfile \
           --platform linux/arm/v7 \
-          --build-arg PYTHON_VERSION={{ python-version }} \
+          --build-arg PYTHON_VERSION=${{ python-version }} \
           --load \
           -t pyarrow:wheel .
 

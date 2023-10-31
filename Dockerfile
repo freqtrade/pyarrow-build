@@ -1,5 +1,5 @@
 ARG PYTHON_VERSION="3.9"
-FROM python:${PYTHON_VERSION}-slim-bullseye as base
+FROM python:${PYTHON_VERSION}-slim-bookworm as base
 
 # Setup env
 ENV LANG C.UTF-8

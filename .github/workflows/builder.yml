@@ -53,5 +53,23 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: pyarrow_wheels
+        name: pyarrow-wheels-${{ matrix.python-version }}
         path: ./assets/dist/
+
+
+  combine:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: pyarrow_wheels
+        pattern: pyarrow-wheels-*
+        merge-multiple: true
+
+    - name: Upload combined artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: pyarrow-wheels-combined
+        path: pyarrow_wheels/

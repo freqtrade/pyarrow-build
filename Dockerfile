@@ -5,7 +5,7 @@ FROM python:${PYTHON_VERSION}-slim-bookworm as base
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 # start pyarrow build
-ARG ARROW_VERSION=16.0.0
+ARG ARROW_VERSION=16.1.0
 
 RUN apt-get update \
     && apt-get -y install \

@@ -41,7 +41,7 @@ RUN apt-get update \
 
 RUN echo "[global]\nextra-index-url=https://www.piwheels.org/simple" > /etc/pip.conf \
   && python -m pip install -U pip \
-  && python -m pip install wheel setuptools numpy pandas==1.4.3 psutil "cython<3.0.9" \
+  && python -m pip install wheel setuptools numpy pandas psutil cython \
   && which python
 
 WORKDIR /build/arrow
@@ -81,7 +81,7 @@ ENV Plasma_DIR=$ARROW_HOME
 
 
 WORKDIR /build/arrow/python
-RUN pip install -r requirements-wheel-build.txt "cython<3.0.9" \
+RUN pip install -r requirements-wheel-build.txt cython \
   && python3 setup.py build_ext --build-type="release" --bundle-arrow-cpp bdist_wheel \
   && ls -l /build/arrow/python/dist
 

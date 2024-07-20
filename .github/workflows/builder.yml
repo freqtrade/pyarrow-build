@@ -5,8 +5,15 @@ on:
     branches:
       - main
       - ci/*
-    tags:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      arrow_version:
+        type: string
+        description: Arrow version to build
+        required: true
+        default: "17.0.0"
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -19,6 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.9", "3.11"]
+    env:
+      ARROW_VERSION: ${{ github.event.inputs.arrow_version || '17.0.0' }}
 
     steps:
     - uses: actions/checkout@v4
@@ -40,6 +49,7 @@ jobs:
         docker buildx build -f Dockerfile \
           --platform linux/arm/v7 \
           --build-arg PYTHON_VERSION=${{ matrix.python-version }} \
+          --build-arg ARROW_VERSION=${{ env.ARROW_VERSION }} \
           --load \
           -t pyarrow:wheel .
 

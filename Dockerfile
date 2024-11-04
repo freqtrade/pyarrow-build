@@ -1,11 +1,11 @@
-ARG PYTHON_VERSION="3.9"
+ARG PYTHON_VERSION="3.11"
 FROM python:${PYTHON_VERSION}-slim-bookworm as base
 
 # Setup env
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 # start pyarrow build
-ARG ARROW_VERSION=16.1.0
+ARG ARROW_VERSION=18.0.0
 
 RUN apt-get update \
     && apt-get -y install \

@@ -12,7 +12,7 @@ on:
         type: string
         description: Arrow version to build
         required: true
-        default: "18.0.0"
+        default: "19.0.0"
 
 
 concurrency:
@@ -25,11 +25,12 @@ jobs:
     env:
       ARROW_VERSION: "${{ inputs.arrow_version || '18.0.0' }}"
 
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.9", "3.11"]
+        os: ["ubuntu-22.04", "ubuntu-24.04-arm"]
 
     steps:
     - uses: actions/checkout@v4
@@ -65,7 +66,7 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: pyarrow-wheels-${{ matrix.python-version }}
+        name: pyarrow-wheels-${{ matrix.python-version }}-${{ matrix.os }}
         path: ./assets/dist/
 
 

@@ -7,13 +7,13 @@ ENV LC_ALL C.UTF-8
 # start pyarrow build
 ARG ARROW_VERSION=18.0.0
 
-RUN apt-get update \
+RUN echo "deb http://deb.debian.org/debian bookworm-backports main" >> /etc/apt/sources.list \
+    && apt-get update \
     && apt-get -y install \
         sudo \
         autoconf \
         bison \
         ca-certificates \
-        cmake \
         curl \
         flex \
         g++ \
@@ -37,6 +37,9 @@ RUN apt-get update \
         liblz4-dev \
         libsnappy-dev \
         libzstd-dev \
+        # cmake from debian-backports
+        && apt-get -t bookworm-backports install -y \
+        cmake \
  && rm -rf /var/lib/apt/lists/*
 
 RUN echo "[global]\nextra-index-url=https://www.piwheels.org/simple" > /etc/pip.conf \

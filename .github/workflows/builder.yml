@@ -25,7 +25,7 @@ jobs:
     env:
       ARROW_VERSION: "${{ inputs.arrow_version || '21.0.0' }}"
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04-arm
     strategy:
       fail-fast: false
       matrix:

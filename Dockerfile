@@ -57,7 +57,7 @@ ENV CMAKE_BUILD_PARALLEL_LEVEL 3
 
 WORKDIR /build/arrow/cpp/release
 RUN cmake \
-    -DPYTHON_EXECUTABLE=/usr/local/bin/python3 \
+    -DPYTHON_EXECUTABLE=/usr/local/bin/python \
     -DCMAKE_INSTALL_PREFIX=$ARROW_HOME \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DARROW_WITH_BZ2=ON \
@@ -88,7 +88,7 @@ ENV Plasma_DIR $ARROW_HOME
 
 WORKDIR /build/arrow/python
 RUN pip install -r requirements-wheel-build.txt cython \
-  && python3 setup.py build_ext --build-type="release" --bundle-arrow-cpp bdist_wheel \
+  && python setup.py build_ext --build-type="release" --bundle-arrow-cpp bdist_wheel \
   && ls -l /build/arrow/python/dist
 
 # COPY --from=pyarrow-deps /build/arrow/python/dist/pyarrow-*.whl .

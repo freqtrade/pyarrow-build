@@ -88,6 +88,7 @@ ENV Plasma_DIR=$ARROW_HOME
 
 WORKDIR /build/arrow/python
 RUN pip install -r requirements-wheel-build.txt cython \
+  && export Python3_NumPy_INCLUDE_DIRS=$(python -c "import numpy; print(numpy.get_include())") \
   && python setup.py build_ext --build-type="release" --bundle-arrow-cpp bdist_wheel \
   && ls -l /build/arrow/python/dist
 

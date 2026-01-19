@@ -22,7 +22,6 @@ RUN echo "deb http://deb.debian.org/debian ${DISTRO}-backports main" >> /etc/apt
         flex \
         g++ \
         gcc \
-        libatlas-base-dev \
         libgfortran5 \
         libboost-dev \
         libboost-filesystem-dev \

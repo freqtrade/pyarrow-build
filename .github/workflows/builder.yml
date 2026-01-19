@@ -29,7 +29,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.13"]
+        include:
+          - python-version: "3.11"
+            distro: "bookworm"
+          - python-version: "3.13"
+            distro: "trixie"
 
     steps:
     - uses: actions/checkout@v4
@@ -51,6 +55,7 @@ jobs:
         docker buildx build -f Dockerfile \
           --platform linux/arm/v7 \
           --build-arg PYTHON_VERSION=${{ matrix.python-version }} \
+          --build-arg DISTRO=${{ matrix.distro }} \
           --build-arg ARROW_VERSION=${{ env.ARROW_VERSION }} \
           --load \
           -t pyarrow:wheel .

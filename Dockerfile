@@ -1,5 +1,6 @@
 ARG PYTHON_VERSION="3.11"
-FROM python:${PYTHON_VERSION}-slim-bookworm AS base
+ARG DISTRO="bookworm"
+FROM python:${PYTHON_VERSION}-slim-${DISTRO} AS base
 
 # Setup env
 ENV LANG=C.UTF-8
@@ -7,7 +8,7 @@ ENV LC_ALL=C.UTF-8
 # start pyarrow build
 ARG ARROW_VERSION=22.0.0
 
-RUN echo "deb http://deb.debian.org/debian bookworm-backports main" >> /etc/apt/sources.list \
+RUN echo "deb http://deb.debian.org/debian ${DISTRO}-backports main" >> /etc/apt/sources.list \
     && apt-get update \
     && apt-get -y install \
         sudo \
@@ -38,7 +39,7 @@ RUN echo "deb http://deb.debian.org/debian bookworm-backports main" >> /etc/apt/
         libsnappy-dev \
         libzstd-dev \
         # cmake from debian-backports
-        && apt-get -t bookworm-backports install -y \
+        && apt-get -t ${DISTRO}-backports install -y \
         cmake \
  && rm -rf /var/lib/apt/lists/*
 

@@ -2,11 +2,14 @@ ARG PYTHON_VERSION="3.11"
 ARG DISTRO="bookworm"
 FROM python:${PYTHON_VERSION}-slim-${DISTRO} AS base
 
+# Redeclare DISTRO to have it available in the next stages
+ARG DISTRO="bookworm"
+
 # Setup env
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 # start pyarrow build
-ARG ARROW_VERSION=22.0.0
+ARG ARROW_VERSION=23.0.0
 
 RUN echo "deb http://deb.debian.org/debian ${DISTRO}-backports main" >> /etc/apt/sources.list \
     && apt-get update \

@@ -9,7 +9,7 @@ ARG DISTRO="bookworm"
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 # start pyarrow build
-ARG ARROW_VERSION=23.0.0
+ARG ARROW_VERSION=24.0.0
 
 RUN echo "deb http://deb.debian.org/debian ${DISTRO}-backports main" >> /etc/apt/sources.list \
     && apt-get update \
@@ -90,9 +90,9 @@ ENV Plasma_DIR=$ARROW_HOME
 
 
 WORKDIR /build/arrow/python
-RUN pip install -r requirements-wheel-build.txt cython \
+RUN pip install -r requirements-wheel-build.txt cython build \
   && export Python3_NumPy_INCLUDE_DIRS=$(python -c "import numpy; print(numpy.get_include())") \
-  && python setup.py build_ext --build-type="release" --bundle-arrow-cpp bdist_wheel \
+  && python -m build --wheel --config-settings=--bundle-arrow-cpp --no-isolation . \
   && ls -l /build/arrow/python/dist
 
 # COPY --from=pyarrow-deps /build/arrow/python/dist/pyarrow-*.whl .

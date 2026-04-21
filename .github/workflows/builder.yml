@@ -12,7 +12,7 @@ on:
         type: string
         description: Arrow version to build
         required: true
-        default: "23.0.0"
+        default: "24.0.0"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,9 +20,9 @@ concurrency:
 
 jobs:
   build:
-    name: Building for ${{ inputs.arrow_version || '23.0.0' }} on ${{ matrix.python-version }}
+    name: Building for ${{ inputs.arrow_version || '24.0.0' }} on ${{ matrix.python-version }}
     env:
-      ARROW_VERSION: "${{ inputs.arrow_version || '23.0.0' }}"
+      ARROW_VERSION: "${{ inputs.arrow_version || '24.0.0' }}"
 
     runs-on: ubuntu-22.04
     strategy:

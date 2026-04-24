@@ -92,7 +92,7 @@ ENV Plasma_DIR=$ARROW_HOME
 WORKDIR /build/arrow/python
 RUN pip install -r requirements-wheel-build.txt cython build \
   && export Python3_NumPy_INCLUDE_DIRS=$(python -c "import numpy; print(numpy.get_include())") \
-  && python -m build --wheel --config-settings=--bundle-arrow-cpp --no-isolation . \
+  && python -m build --wheel --config-setting=--bundle-arrow-cpp --no-isolation . \
   && ls -l /build/arrow/python/dist
 
 # COPY --from=pyarrow-deps /build/arrow/python/dist/pyarrow-*.whl .

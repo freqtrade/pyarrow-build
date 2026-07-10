@@ -20,7 +20,6 @@ updates:
     interval: "cron"
     cronjob: "0 2 10 * *"   # 10th of every month at 02:00
   open-pull-requests-limit: 10
-  target-branch: develop
   groups:
     actions:
       patterns:

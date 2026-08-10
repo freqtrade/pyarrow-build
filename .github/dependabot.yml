@@ -9,7 +9,7 @@ updates:
     - "/"
   schedule:
     interval: "cron"
-    cronjob: "0 2 5 * *"   # 5th of every month at 02:00
+    cronjob: "0 2 13 * *"   # 5th of every month at 02:00
   open-pull-requests-limit: 10
 
 - package-ecosystem: "github-actions"
@@ -18,7 +18,7 @@ updates:
     default-days: 7
   schedule:
     interval: "cron"
-    cronjob: "0 2 10 * *"   # 10th of every month at 02:00
+    cronjob: "0 2 17 * *"   # 10th of every month at 02:00
   open-pull-requests-limit: 10
   groups:
     actions:
